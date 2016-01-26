@@ -1,5 +1,8 @@
-Item(ItemID, Name, Category, Currently, Buy_Price, First_Bid, Number of Bids, Location, Country, Started, Ends, Seller)
+Item(ItemID, Name, Currently, Buy_Price, First_Bid, Number of Bids, Location, Country, Started, Ends, Seller)
 key:ItemID
+
+Category(ItemID, category)
+key:ItemID, category
 
 Bids(ItemID, userID, time, amount)
 key:ItemID, userID, time (a user can bid on one item multiple times but should not at the same time)
