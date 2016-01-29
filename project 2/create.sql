@@ -1,12 +1,12 @@
 CREATE TABLE Bidder (
-	userID int(11) NOT NULL PRIMARY KEY,
+	userID varchar(50) NOT NULL PRIMARY KEY,
 	rating int(11) NOT NULL,
 	location varchar(100) NOT NULL,
 	country varchar(100) NOT NULL
 ) ENGINE=INNODB;
 
 CREATE TABLE Seller (
-	userID int(11) NOT NULL PRIMARY KEY,
+	userID varchar(50) NOT NULL PRIMARY KEY,
 	rating int(11) NOT NULL
 ) ENGINE=INNODB;
 
@@ -20,7 +20,7 @@ CREATE TABLE Item (
 	Country varchar(50) NOT NULL,
 	Started timestamp NOT NULL,
 	Ends timestamp NOT NULL,
-	Seller int NOT NULL,
+	Seller varchar(50) NOT NULL,
 	Latitude float NOT NULL,
 	Longitude float NOT NULL,
 	FOREIGN KEY (Seller) REFERENCES Seller(userID)
@@ -35,7 +35,7 @@ CREATE TABLE Category (
 
 CREATE TABLE Bid (
 	ItemID int(11) NOT NULL,
-	userID int(11) NOT NULL,
+	userID varchar(50) NOT NULL,
 	time timestamp NOT NULL,
 	amount float NOT NULL,
 	PRIMARY KEY (ItemID, userID),
