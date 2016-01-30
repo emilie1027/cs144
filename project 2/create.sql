@@ -15,15 +15,17 @@ CREATE TABLE Item (
 	Name varchar(100) NOT NULL,
 	Currently float NOT NULL,
 	Buy_Price float NOT NULL,
+	First_Bid float NOT NULL,
 	NumberofBids int(11) NOT NULL,
 	Location varchar(100) NOT NULL,
 	Country varchar(50) NOT NULL,
 	Started timestamp NOT NULL,
 	Ends timestamp NOT NULL,
+	Description text NOT NULL,
 	Seller varchar(50) NOT NULL,
 	Latitude float NOT NULL,
 	Longitude float NOT NULL,
-	FOREIGN KEY (Seller) REFERENCES Seller(userID)
+	FOREIGN KEY Item(Seller) REFERENCES Seller(userID)
 ) ENGINE=INNODB;
 
 CREATE TABLE Category (
