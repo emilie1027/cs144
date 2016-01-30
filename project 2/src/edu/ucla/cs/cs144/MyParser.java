@@ -231,13 +231,13 @@ class MyParser {
             String[] item = new String[itemAttrName.length];
             item[0] = getAttributeTextByTagName(itemEle, "ItemID");
             for (int j = 1; j < itemAttrName.length; ++j) {
-                item[j] = '"' + getElementTextByTagNameNR(itemEle, itemAttrName[j]).replace("\"", "\\\"") + '"';
+                item[j] = '"' + getElementTextByTagNameNR(itemEle, itemAttrName[j]).replace("\"", "\"\"").replace("\\", "\\\\") + '"';
             }
             Element[] categoriesEle = getElementsByTagNameNR(itemEle, "Category");
             for (int j = 0; j < categoriesEle.length; ++j) {
                 String[] category = new String[categoryAttrName.length];
                 category[0] = item[0];
-                category[1] = '"' + getElementText(categoriesEle[j]).replace("\"", "\\\"") + '"';
+                category[1] = '"' + getElementText(categoriesEle[j]).replace("\"", "\"\"").replace("\\", "\\\\") + '"';
                 categoryList.add(category);
             }
             Element[] bidsEle = getElementsByTagNameNR(getElementByTagNameNR(itemEle, "Bids"), "Bid");
@@ -248,10 +248,10 @@ class MyParser {
                 String[] bidder = new String[bidderAttrName.length];
                 if (bid != null) {
                     for (int k = 0; k < 2; ++k) {
-                        bidder[k] = '"' + getAttributeTextByTagName(bidderEle, bidderAttrName[k]).replace("\"", "\\\"") + '"';
+                        bidder[k] = '"' + getAttributeTextByTagName(bidderEle, bidderAttrName[k]).replace("\"", "\"\"").replace("\\", "\\\\") + '"';
                     }
                     for (int k = 2; k < bidderAttrName.length; ++k) {
-                        bidder[k] = '"' + getElementTextByTagNameNR(bidderEle, bidderAttrName[k]).replace("\"", "\\\"") + '"';
+                        bidder[k] = '"' + getElementTextByTagNameNR(bidderEle, bidderAttrName[k]).replace("\"", "\"\"").replace("\\", "\\\\") + '"';
                     }
                 }
                 bid[0] = item[0];
@@ -267,19 +267,19 @@ class MyParser {
             String[] location = new String[locationAttrName.length];
             Element locationEle = getElementByTagNameNR(itemEle, "Location");
             for (int j = 0; j < locationAttrName.length; ++j) {
-                location[j] = '"' + getAttributeTextByTagName(locationEle, locationAttrName[j]).replace("\"", "\\\"") + '"';
+                location[j] = '"' + getAttributeTextByTagName(locationEle, locationAttrName[j]).replace("\"", "\"\"").replace("\\", "\\\\") + '"';
             }
             String[] seller = new String[sellerAttrName.length];
             Element sellerEle = getElementByTagNameNR(itemEle, "Seller");
             for (int j = 0; j < sellerAttrName.length; ++j) {
-                seller[j] = '"' + getAttributeTextByTagName(sellerEle, sellerAttrName[j]).replace("\"", "\\\"") + '"';
+                seller[j] = '"' + getAttributeTextByTagName(sellerEle, sellerAttrName[j]).replace("\"", "\"\"").replace("\\", "\\\\") + '"';
             }
             if (!sellerSet.contains(seller[0])) {
                 sellerList.add(seller);
                 sellerSet.add(seller[0]);
             }
-            item[8] = formatTime(item[8].replace("\"", ""));
-            item[9] = formatTime(item[9].replace("\"", ""));
+            item[8] = formatTime(item[8].replace("\"", "")).replace("\\", "");
+            item[9] = formatTime(item[9].replace("\"", "")).replace("\\", "");
             item[itemAttrName.length - 3] = seller[0];
             item[itemAttrName.length - 2] = location[0];
             item[itemAttrName.length - 1] = location[1];

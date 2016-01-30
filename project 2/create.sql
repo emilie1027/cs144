@@ -13,9 +13,9 @@ CREATE TABLE Seller (
 CREATE TABLE Item (
 	ItemID int(11) NOT NULL PRIMARY KEY,
 	Name varchar(100) NOT NULL,
-	Currently float NOT NULL,
-	Buy_Price float NOT NULL,
-	First_Bid float NOT NULL,
+	Currently varchar(10) NOT NULL,
+	Buy_Price varchar(10) NOT NULL,
+	First_Bid varchar(10) NOT NULL,
 	NumberofBids int(11) NOT NULL,
 	Location varchar(100) NOT NULL,
 	Country varchar(50) NOT NULL,
@@ -23,8 +23,8 @@ CREATE TABLE Item (
 	Ends timestamp NOT NULL,
 	Description text NOT NULL,
 	Seller varchar(50) NOT NULL,
-	Latitude float NOT NULL,
-	Longitude float NOT NULL,
+	Latitude varchar(100) NOT NULL,
+	Longitude varchar(100) NOT NULL,
 	FOREIGN KEY Item(Seller) REFERENCES Seller(userID)
 ) ENGINE=INNODB;
 
