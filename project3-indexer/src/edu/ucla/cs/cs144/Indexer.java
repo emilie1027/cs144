@@ -24,6 +24,12 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.IndexSearcher;
+
 public class Indexer {
     
     /** Creates a new instance of Indexer */
@@ -200,8 +206,39 @@ public class Indexer {
         }
     }
 
-    //public static void main(String args[]) {
-    //    Indexer idx = new Indexer();
-    //    idx.rebuildIndexes();
-    //}
+    public static void main(String args[]) {
+        Indexer idx = new Indexer();
+        idx.rebuildIndexes();
+    /*
+        try {
+            // build a lucene index
+            System.out.println("rebuildIndexes");
+            Indexer indexer = new Indexer();
+            indexer.rebuildIndexes();
+            System.out.println("rebuildIndexes done");
+            
+            // perform search on "Notre Dame museum"
+            // and retrieve the top 100 result
+            System.out.println("performSearch");
+            SearchEngine se = new SearchEngine();
+            //TopDocs topDocs = se.performSearch("Notre Dame museum", 100);
+            TopDocs topDocs = se.performSearch("superman", Integer.MAX_VALUE);
+            System.out.println("Results found: " + topDocs.totalHits);
+            TopDocs topDocs = se.performSearch("kitchenware", Integer.MAX_VALUE);
+            System.out.println("Results found: " + topDocs.totalHits);
+           TopDocs topDocs = se.performSearch("", Integer.MAX_VALUE);
+     
+            ScoreDoc[] hits = topDocs.scoreDocs;
+            for (int i = 0; i < hits.length; i++) {
+                Document doc = se.getDocument(hits[i].doc);
+                System.out.println(doc.get("ItemID")
+                                   + " " + doc.get("Name")
+                                   + " (" + hits[i].score + ")");
+            }
+            System.out.println("performSearch done");
+        } catch (Exception e) {
+            System.out.println("Exception caught.\n");
+        }
+     */
+    }
 }

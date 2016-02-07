@@ -5,12 +5,12 @@
  *
  */
 
-package lucene.demo;
+package edu.ucla.cs.cs144;
 
 import java.util.Iterator;
 
-import lucene.demo.search.*;
-import lucene.demo.business.*;
+//import lucene.demo.search.*;
+//import lucene.demo.business.*;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Document;
@@ -54,7 +54,7 @@ public class Main {
         System.out.println("performSearch");
         SearchEngine se = new SearchEngine();
         //TopDocs topDocs = se.performSearch("Notre Dame museum", 100);
-          TopDocs topDocs = se.performSearch("superman");
+          TopDocs topDocs = se.performSearch("superman", Integer.MAX_VALUE);
 
         System.out.println("Results found: " + topDocs.totalHits);
         ScoreDoc[] hits = topDocs.scoreDocs;
