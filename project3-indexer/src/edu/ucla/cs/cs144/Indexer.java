@@ -169,7 +169,8 @@ public class Indexer {
     public IndexWriter getIndexWriter(boolean create) {
         try {
             if (indexWriter == null) {
-                Directory indexDir = FSDirectory.open(new File("index-directory"));
+                Directory indexDir = FSDirectory.open(new File("/var/lib/lucene/index1"));
+                //Directory indexDir = FSDirectory.open(new File("index-directory"));
                 IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_4_10_2, new StandardAnalyzer());
                 indexWriter = new IndexWriter(indexDir, config);
             }
@@ -209,25 +210,18 @@ public class Indexer {
     public static void main(String args[]) {
         Indexer idx = new Indexer();
         idx.rebuildIndexes();
-    /*
+        /*
         try {
-            // build a lucene index
-            System.out.println("rebuildIndexes");
-            Indexer indexer = new Indexer();
-            indexer.rebuildIndexes();
-            System.out.println("rebuildIndexes done");
-            
-            // perform search on "Notre Dame museum"
-            // and retrieve the top 100 result
             System.out.println("performSearch");
             SearchEngine se = new SearchEngine();
             //TopDocs topDocs = se.performSearch("Notre Dame museum", 100);
-            TopDocs topDocs = se.performSearch("superman", Integer.MAX_VALUE);
+            //TopDocs topDocs = se.performSearch("superman", Integer.MAX_VALUE);
+            //System.out.println("Results found: " + topDocs.totalHits);
+            
+            TopDocs topDocs = se.performSearch("star trek", Integer.MAX_VALUE);
             System.out.println("Results found: " + topDocs.totalHits);
-            TopDocs topDocs = se.performSearch("kitchenware", Integer.MAX_VALUE);
-            System.out.println("Results found: " + topDocs.totalHits);
-           TopDocs topDocs = se.performSearch("", Integer.MAX_VALUE);
-     
+            //TopDocs topDocs = se.performSearch("", Integer.MAX_VALUE);
+            
             ScoreDoc[] hits = topDocs.scoreDocs;
             for (int i = 0; i < hits.length; i++) {
                 Document doc = se.getDocument(hits[i].doc);
@@ -239,6 +233,6 @@ public class Indexer {
         } catch (Exception e) {
             System.out.println("Exception caught.\n");
         }
-     */
+         */
     }
 }
