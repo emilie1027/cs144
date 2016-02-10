@@ -21,7 +21,7 @@ CREATE TABLE Item (
 	Country varchar(50) NOT NULL,
 	Started timestamp NOT NULL,
 	Ends timestamp NOT NULL,
-	Description text NOT NULL,
+	Description varchar(4000) NOT NULL,
 	Seller varchar(50) NOT NULL,
 	Latitude varchar(100) NOT NULL,
 	Longitude varchar(100) NOT NULL,
