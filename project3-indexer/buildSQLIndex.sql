@@ -1,0 +1,5 @@
+CREATE TABLE RegionIndex (
+	ItemId int(11) NOT NULL PRIMARY KEY,
+	point POINT NOT NULL,
+	SPATIAL INDEX (point)
+) ENGINE=MyISAM;
