@@ -1,0 +1,85 @@
+Buildfile: /media/sf_vm-shared/project3-indexer/build.xml
+
+init:
+
+compile:
+     [echo] project3: /media/sf_vm-shared/project3-indexer/build.xml
+    [javac] Compiling 1 source file to /media/sf_vm-shared/project3-indexer/bin
+
+run:
+     [java] rebuildIndexes
+     [java] rebuildIndexes done
+     [java] performSearch
+     [java] Results found: 68
+     [java] 1049430907 null (1.8575305)
+     [java] 1045823269 null (1.4685068)
+     [java] 1047761329 null (1.3931478)
+     [java] 1048743351 null (1.3931478)
+     [java] 1048263344 null (1.3736622)
+     [java] 1046936194 null (1.2589822)
+     [java] 1047388061 null (1.2589822)
+     [java] 1048647703 null (1.2460693)
+     [java] 1047692530 null (1.1748054)
+     [java] 1045602125 null (1.0383911)
+     [java] 1049272510 null (1.0383911)
+     [java] 1496788150 null (1.0383911)
+     [java] 1046639674 null (1.0279547)
+     [java] 1494232488 null (1.0279547)
+     [java] 1497574160 null (1.0279547)
+     [java] 1678142392 null (1.0279547)
+     [java] 1048720097 null (0.92876524)
+     [java] 1046820567 null (0.89927304)
+     [java] 1046290388 null (0.88110405)
+     [java] 1048008620 null (0.88110405)
+     [java] 1048388684 null (0.88110405)
+     [java] 1049196599 null (0.88110405)
+     [java] 1049447195 null (0.88110405)
+     [java] 1679241569 null (0.88110405)
+     [java] 1046523315 null (0.83071285)
+     [java] 1046831029 null (0.83071285)
+     [java] 1048832314 null (0.83071285)
+     [java] 1494887684 null (0.83071285)
+     [java] 1676483381 null (0.7342534)
+     [java] 1044953624 null (0.72687376)
+     [java] 1047278972 null (0.72687376)
+     [java] 1048879271 null (0.72687376)
+     [java] 1045728214 null (0.7194184)
+     [java] 1045842209 null (0.7194184)
+     [java] 1496375780 null (0.7194184)
+     [java] 1496448629 null (0.7194184)
+     [java] 1045034667 null (0.6294911)
+     [java] 1049208273 null (0.6294911)
+     [java] 1045689513 null (0.62303466)
+     [java] 1046769974 null (0.62303466)
+     [java] 1049198442 null (0.62303466)
+     [java] 1045351826 null (0.5874027)
+     [java] 1047189151 null (0.5874027)
+     [java] 1048281549 null (0.5874027)
+     [java] 1048569770 null (0.5874027)
+     [java] 1495747102 null (0.5395638)
+     [java] 1047821197 null (0.51919556)
+     [java] 1047841213 null (0.51919556)
+     [java] 1047864012 null (0.51919556)
+     [java] 1049614058 null (0.51919556)
+     [java] 1676441988 null (0.51397735)
+     [java] 1049536210 null (0.44055203)
+     [java] 1047364836 null (0.41535643)
+     [java] 1048093059 null (0.41535643)
+     [java] 1049479143 null (0.41535643)
+     [java] 1675147326 null (0.41535643)
+     [java] 1675232258 null (0.41535643)
+     [java] 1675508425 null (0.41535643)
+     [java] 1676083232 null (0.41535643)
+     [java] 1677376351 null (0.41535643)
+     [java] 1677465071 null (0.41535643)
+     [java] 1678510758 null (0.41535643)
+     [java] 1046447411 null (0.36343688)
+     [java] 1046954890 null (0.36343688)
+     [java] 1498127489 null (0.36343688)
+     [java] 1049192271 null (0.31151733)
+     [java] 1496674228 null (0.29370135)
+     [java] 1497981079 null (0.25959778)
+     [java] performSearch done
+
+BUILD SUCCESSFUL
+Total time: 5 seconds
