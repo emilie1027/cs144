@@ -54,16 +54,25 @@ public class AuctionSearch implements IAuctionSearch {
 	public SearchResult[] basicSearch(String query, int numResultsToSkip, 
 			int numResultsToReturn) {
 		// TODO: Your code here!
-        SearchResult[] searchResult = new SearchResult[numResultsToReturn];
+        SearchResult[] searchResult = null;
         try {
              System.out.println("performSearch");
              SearchEngine se = new SearchEngine();
              TopDocs topDocs = se.performSearch(query, numResultsToSkip + numResultsToReturn);
              
              ScoreDoc[] hits = topDocs.scoreDocs;
-             for (int i = 0 ; i < numResultsToReturn; i++) {
-                 Document doc = se.getDocument(hits[i + numResultsToSkip].doc);
-                 searchResult[i] =  new SearchResult(doc.get("ItemID"), doc.get("Name"));
+             
+             int len = hits.length - numResultsToSkip;
+             if (len < 0)
+            	 len = 0;
+             
+             searchResult = new SearchResult[len];
+             
+             ArrayList<SearchResult> midResult = new ArrayList<SearchResult>();
+             int midCounter = 0;
+             for (int i = numResultsToSkip ; i < hits.length; i++) {
+                 Document doc = se.getDocument(hits[i].doc);
+                 searchResult[i - numResultsToSkip] =  new SearchResult(doc.get("ItemID"), doc.get("Name"));
              }
              System.out.println("performSearch done");
          } catch (Exception e) {
@@ -78,7 +87,6 @@ public class AuctionSearch implements IAuctionSearch {
 	public SearchResult[] spatialSearch(String query, SearchRegion region,
 			int numResultsToSkip, int numResultsToReturn) {
 		// TODO: Your code here!
-		SearchResult[] searchResult = new SearchResult[numResultsToReturn];
 		SearchResult[] finalResult = null;
 		
 		try {
@@ -100,11 +108,11 @@ public class AuctionSearch implements IAuctionSearch {
 			
 			int mixedResultCounter = 0;
 			ArrayList<SearchResult> mixedResult = new ArrayList<SearchResult>();
-			for (int i = 0; i < searchResult.length; i++)
-				if (inRegionList.contains(searchResult[i].getItemId())) {
+			for (int i = 0; i < basicResult.length; i++)
+				if (inRegionList.contains(basicResult[i].getItemId())) {
 					mixedResultCounter++;
 					if (mixedResultCounter > numResultsToSkip && mixedResultCounter <= numResultsToSkip + numResultsToReturn) {
-						mixedResult.add(searchResult[i]);
+						mixedResult.add(basicResult[i]);
 					}
 				}
 			
@@ -118,7 +126,7 @@ public class AuctionSearch implements IAuctionSearch {
 		} catch (Exception e) {
 			System.out.println("Exception caught.\n");
 		} finally {
-			return searchResult;
+			return finalResult;
 		}
 	}
 
