@@ -87,12 +87,13 @@ public class AuctionSearch implements IAuctionSearch {
 			Connection db = DbManager.getConnection(true);
 			Statement stmt = db.createStatement();
 			
-			String geoCondition = "POLYGON(" + region.getLx() + " " + region.getLy() + ", "
+			String geoCondition = "POLYGON((" + region.getLx() + " " + region.getLy() + ", "
 					+ region.getLx() + " " + region.getRy() + ", "
 					+ region.getRx() + " " + region.getRy() + ", "
-					+ region.getRx() + " " + region.getLy() + ")";
+					+ region.getRx() + " " + region.getLy() + ", "
+					+ region.getLx() + " " + region.getLy() + "))";
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM RegionIndex WHERE Contains(GeomFromText('"+ geoCondition +"'), g);");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM RegionIndex WHERE Contains(GeomFromText('"+ geoCondition +"'), point);");
 			while (rs.next()) {
 				inRegionList.add(rs.getString("ItemID"));
 			}
