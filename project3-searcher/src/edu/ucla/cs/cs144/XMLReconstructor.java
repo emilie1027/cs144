@@ -190,19 +190,19 @@ public class XMLReconstructor {
             itemEle.setAttribute(itemAttrName[0], itemAttr[0]);
             doc.appendChild(itemEle);
             Element nameEle = doc.createElement(itemAttrName[1]);
-            nameEle.appendChild(doc.createTextNode(itemAttr[1]));
+            nameEle.appendChild(doc.createTextNode(escapeConverter(itemAttr[1])));
             itemEle.appendChild(nameEle);
             //add category
             for (int i = 0 ; i < categoryList.size() ; i++) {
                 String[] category = categoryList.get(i);
                 Element categoryEle = doc.createElement("Category");
-                categoryEle.appendChild(doc.createTextNode(category[1]));
+                categoryEle.appendChild(doc.createTextNode(escapeConverter(category[1])));
                 itemEle.appendChild(categoryEle);
             }
             for (int i = 2 ; i < 6 ; i++) {
                 if (!"".equals(itemAttr[i])) {
                     Element eleTemp = doc.createElement(itemAttrName[i]);
-                    eleTemp.appendChild(doc.createTextNode(itemAttr[i]));
+                    eleTemp.appendChild(doc.createTextNode(escapeConverter(itemAttr[i])));
                     itemEle.appendChild(eleTemp);
                 }
             }
@@ -223,13 +223,13 @@ public class XMLReconstructor {
                     }
                     for (int j = 2; j < bidderAttrName.length ; j++) {
                         Element eleTemp = doc.createElement(bidderAttrName[j]);
-                        eleTemp.appendChild(doc.createTextNode(bidder[j]));
+                        eleTemp.appendChild(doc.createTextNode(escapeConverter(bidder[j])));
                         bidderEle.appendChild(eleTemp);
                     }
                     bidEle.appendChild(bidderEle);
                     for (int j = 2; j < bidAttrName.length ; j++) {
                         Element eleTemp = doc.createElement(bidAttrName[j]);
-                        eleTemp.appendChild(doc.createTextNode(bid[j]));
+                        eleTemp.appendChild(doc.createTextNode(escapeConverter(bid[j])));
                         bidEle.appendChild(eleTemp);
                     }
                     bidsEle.appendChild(bidEle);
@@ -237,7 +237,7 @@ public class XMLReconstructor {
             }
             //add latitue, longitude
             Element locationEle = doc.createElement("Location");
-            locationEle.appendChild(doc.createTextNode(itemAttr[6]));
+            locationEle.appendChild(doc.createTextNode(escapeConverter(itemAttr[6])));
             for (int i = 12; i < itemAttrName.length ; i++) {
                 if (!("".equals(itemAttr[i])))
                     locationEle.setAttribute(itemAttrName[i], itemAttr[i]);
@@ -247,7 +247,7 @@ public class XMLReconstructor {
             for (int i = 7 ; i < 10; i++) {
                 if (!"".equals(itemAttr[i])) {
                     Element eleTemp = doc.createElement(itemAttrName[i]);
-                    eleTemp.appendChild(doc.createTextNode(itemAttr[i]));
+                    eleTemp.appendChild(doc.createTextNode(escapeConverter(itemAttr[i])));
                     itemEle.appendChild(eleTemp);
                 }
             }
@@ -260,7 +260,7 @@ public class XMLReconstructor {
             itemEle.appendChild(sellerEle);
             //add description
             Element descriptionEle = doc.createElement(itemAttrName[10]);
-            descriptionEle.appendChild(doc.createTextNode(itemAttr[10]));
+            descriptionEle.appendChild(doc.createTextNode(escapeConverter(itemAttr[10])));
             itemEle.appendChild(descriptionEle);
             result = getStringFromDoc(doc);
         } catch (ParserConfigurationException ex) {
@@ -269,5 +269,8 @@ public class XMLReconstructor {
         return result;
     }
     
+    private String escapeConverter(String content) {
+    	return content.replace("&", "&amp;").replace(">", "&gt;").replace("<", "&lt;");
+    }
     
 }
