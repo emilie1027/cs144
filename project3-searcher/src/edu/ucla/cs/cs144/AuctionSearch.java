@@ -132,7 +132,8 @@ public class AuctionSearch implements IAuctionSearch {
 
 	public String getXMLDataForItemId(String itemId) {
 		// TODO: Your code here!
-		return "";
+        XMLReconstructor xmlReconstructor = new XMLReconstructor(itemId);
+        return xmlReconstructor.reconstructXML();
 	}
 	
 	public String echo(String message) {

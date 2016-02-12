@@ -54,7 +54,7 @@ public class XMLReconstructor {
         sellerQuery = "SELECT * FROM Seller WHERE userID = ";
         bidderQuery = "SELECT * FROM Bidder WHERE userID = ";
     }
-	
+    
     public void retrieveData() {
         Connection conn = null;
         try {
@@ -91,7 +91,7 @@ public class XMLReconstructor {
         }
     }
     
-
+    
     private List<String[]> retrieveDataListFromRSet(ResultSet rs, int dataLength) {
         List<String[]> dataList = new ArrayList<String[]>();
         try {
@@ -115,7 +115,40 @@ public class XMLReconstructor {
         }
         return dataList;
     }
-
+    
+    public String getStringFromDoc(org.w3c.dom.Document doc)    {
+        try {
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+            StreamResult result = new StreamResult(new StringWriter());
+            DOMSource source = new DOMSource(doc);
+            transformer.transform(source, result);
+            return result.getWriter().toString();
+        } catch(TransformerException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    private String formatTime(String time) {
+        String result = "";
+        try {
+            SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date parsed = oldFormat.parse(time);
+            SimpleDateFormat newFormat = new SimpleDateFormat("MMM-dd-yy HH:mm:ss");
+            result = newFormat.format(parsed);
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        finally {
+            return result;
+        }
+    }
+    
     
     public String reconstructXML() {
         /*
@@ -142,63 +175,93 @@ public class XMLReconstructor {
         if (itemList.size() == 0)
             return result;
         try {
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-        Document doc = docBuilder.newDocument();
-        
-        //add item
-        String[] itemAttr = itemList.get(0);
-        Element itemEle = doc.createElement("Item");
-        itemEle.setAttribute(itemAttrName[0], itemAttr[0]);
-        doc.appendChild(itemEle);
-        
-        for (int i = 1 ; i < itemAttrName.length - 2; i++) {
-            Element eleTemp = doc.createElement(itemAttrName[i]);
-            eleTemp.appendChild(doc.createTextNode(itemAttr[i]));
-            itemEle.appendChild(eleTemp);
-        }
-        //add category
-        for (int i = 0 ; i < categoryList.size() ; i++) {
-            String[] category = categoryList.get(i);
-            Element categoryEle = doc.createElement("Category");
-            categoryEle.appendChild(doc.createTextNode(category[1]));
-            itemEle.appendChild(categoryEle);
-        }
-        //add seller
-        String[] seller = sellerList.get(0);
-        Element sellerEle = (Element)itemEle.getElementsByTagName("Seller").item(0);
-        for (int i = 0; i < sellerAttrName.length ; i++) {
-            sellerEle.setAttribute(sellerAttrName[i], seller[i]);
-        }
-        //add latitue, longitude
-        Element locationEle = (Element)itemEle.getElementsByTagName("Location").item(0);
-        for (int i = 12; i < itemAttrName.length ; i++) {
-            locationEle.setAttribute(itemAttrName[i], itemAttr[i]);
-        }
-        //add bid and bidder
-        if (bidList.size() > 0) {
-            Element bidsEle = (Element)itemEle.getElementsByTagName("Bids").item(0);
-            for (int i = 0 ; i < bidList.size() ; i++) {
-                String[] bid = bidList.get(i);
-                String[] bidder = bidderList.get(i);
-                Element bidEle = doc.createElement("Bid");
-                Element bidderEle = doc.createElement("Bidder");
-                //add bidder
-                for (int j = 0 ; j < 2 ; j++) {
-                    bidderEle.setAttribute(bidderAttrName[j], bidder[j]);
-                }
-                for (int j = 2; j < bidderAttrName.length ; j++) {
-                    bidderEle.appendChild(doc.createElement(bidderAttrName[j]).appendChild(doc.createTextNode(bidder[j])));
-                }
-                bidEle.appendChild(bidderEle);
-                for (int j = 2; j < bidAttrName.length ; j++) {
-                    Element eleTemp = doc.createElement(bidAttrName[j]);
-                    eleTemp.appendChild(doc.createTextNode(bid[j]));
-                    bidEle.appendChild(eleTemp);
-                }
-                bidsEle.appendChild(bidEle);
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.newDocument();
+            
+            //add item
+            String[] itemAttr = itemList.get(0);
+            itemAttr[8] = formatTime(itemAttr[8]);
+            itemAttr[9] = formatTime(itemAttr[9]);
+            for (int i = 2 ; i < 5 ; i++ ) {
+                if ( !"".equals(itemAttr[i])) itemAttr[i] = "$" + itemAttr[i];
             }
-        }
+            Element itemEle = doc.createElement("Item");
+            itemEle.setAttribute(itemAttrName[0], itemAttr[0]);
+            doc.appendChild(itemEle);
+            Element nameEle = doc.createElement(itemAttrName[1]);
+            nameEle.appendChild(doc.createTextNode(itemAttr[1]));
+            itemEle.appendChild(nameEle);
+            //add category
+            for (int i = 0 ; i < categoryList.size() ; i++) {
+                String[] category = categoryList.get(i);
+                Element categoryEle = doc.createElement("Category");
+                categoryEle.appendChild(doc.createTextNode(category[1]));
+                itemEle.appendChild(categoryEle);
+            }
+            for (int i = 2 ; i < 6 ; i++) {
+                if (!"".equals(itemAttr[i])) {
+                    Element eleTemp = doc.createElement(itemAttrName[i]);
+                    eleTemp.appendChild(doc.createTextNode(itemAttr[i]));
+                    itemEle.appendChild(eleTemp);
+                }
+            }
+            //add bid and bidder
+            if (bidList.size() > 0) {
+                Element bidsEle = doc.createElement("Bids");
+                itemEle.appendChild(bidsEle);
+                for (int i = 0 ; i < bidList.size() ; i++) {
+                    String[] bid = bidList.get(i);
+                    bid[2] = formatTime(bid[2]);
+                    bid[3] = "$" + bid[3];
+                    String[] bidder = bidderList.get(i);
+                    Element bidEle = doc.createElement("Bid");
+                    Element bidderEle = doc.createElement("Bidder");
+                    //add bidder
+                    for (int j = 0 ; j < 2 ; j++) {
+                        bidderEle.setAttribute(bidderAttrName[j], bidder[j]);
+                    }
+                    for (int j = 2; j < bidderAttrName.length ; j++) {
+                        Element eleTemp = doc.createElement(bidderAttrName[j]);
+                        eleTemp.appendChild(doc.createTextNode(bidder[j]));
+                        bidderEle.appendChild(eleTemp);
+                    }
+                    bidEle.appendChild(bidderEle);
+                    for (int j = 2; j < bidAttrName.length ; j++) {
+                        Element eleTemp = doc.createElement(bidAttrName[j]);
+                        eleTemp.appendChild(doc.createTextNode(bid[j]));
+                        bidEle.appendChild(eleTemp);
+                    }
+                    bidsEle.appendChild(bidEle);
+                }
+            }
+            //add latitue, longitude
+            Element locationEle = doc.createElement("Location");
+            locationEle.appendChild(doc.createTextNode(itemAttr[6]));
+            for (int i = 12; i < itemAttrName.length ; i++) {
+                if (!("".equals(itemAttr[i])))
+                    locationEle.setAttribute(itemAttrName[i], itemAttr[i]);
+            }
+            itemEle.appendChild(locationEle);
+            
+            for (int i = 7 ; i < 10; i++) {
+                if (!"".equals(itemAttr[i])) {
+                    Element eleTemp = doc.createElement(itemAttrName[i]);
+                    eleTemp.appendChild(doc.createTextNode(itemAttr[i]));
+                    itemEle.appendChild(eleTemp);
+                }
+            }
+            //add seller
+            String[] seller = sellerList.get(0);
+            Element sellerEle = doc.createElement("Seller");
+            for (int i = 0; i < sellerAttrName.length ; i++) {
+                sellerEle.setAttribute(sellerAttrName[i], seller[i]);
+            }
+            itemEle.appendChild(sellerEle);
+            //add description
+            Element descriptionEle = doc.createElement(itemAttrName[10]);
+            descriptionEle.appendChild(doc.createTextNode(itemAttr[10]));
+            itemEle.appendChild(descriptionEle);
             result = getStringFromDoc(doc);
         } catch (ParserConfigurationException ex) {
             System.out.println(ex);
@@ -206,23 +269,5 @@ public class XMLReconstructor {
         return result;
     }
     
-    public String getStringFromDoc(org.w3c.dom.Document doc)    {
-        try {
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            StreamResult result = new StreamResult(new StringWriter());
-            DOMSource source = new DOMSource(doc);
-            transformer.transform(source, result);
-            return result.getWriter().toString();
-        } catch(TransformerException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-   /*
-    public static void main(String[] args) {
-        XMLReconstructor xmlReconstructor = new XMLReconstructor("1043374545");
-        String result = xmlReconstructor.reconstructXML();
-        System.out.println(result);
-    }
-    */
+    
 }
