@@ -1,6 +1,7 @@
-This example contains a simple utility class to simplify opening database
-connections in Java applications, such as the one you will write to build
-your Lucene index. 
+We decide indexes itemID and name of items on its attribute, union of the item name, category and description.
 
-To build and run the sample code, use the "run" ant target inside
-the directory with build.xml by typing "ant run".
+We use these two indexes because it can make indexing faster without accessing database again than if we use only one index.
+Since our goal is to find out the items that have target keyword in the union of its name, category and description attributes, we index on the text of their unions.
+
+
+
