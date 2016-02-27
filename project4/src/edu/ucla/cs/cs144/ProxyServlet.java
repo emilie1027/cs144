@@ -20,7 +20,12 @@ public class ProxyServlet extends HttpServlet implements Servlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         // your codes here
-    	URL url = new URL("http://google.com/complete/search?output=toolbar&q=" + request.getParameter("q"));
+    	String query = request.getParameter("q");
+    	if (query == null)
+    		query = "";
+    	query = query.replace(" ", "%20");
+    	
+    	URL url = new URL("http://google.com/complete/search?output=toolbar&q=" + query);
     	HttpURLConnection requester = (HttpURLConnection) url.openConnection();
     	
     	requester.setRequestMethod("GET");

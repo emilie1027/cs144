@@ -1,13 +1,16 @@
 <html>
 <head>
 	<title>eBay Data Keyword Search</title>
+	<script type="text/javascript" src="autosuggest.js"></script>
+	<script type="text/javascript" src="suggestion.js"></script>
+	<link rel="stylesheet" type="text/css" href="autosuggest.css" />
 </head>
 
 <body>
 	<h1>eBay Data Keyword Search</h1>
 	<form id="form1" method="get" action="/eBay/search">
 		<b>keyword:</b><br/>
-		<input type="text" name="q"/>
+		<input type="text" id="q" name="q"/>
 		<br/><br/>
 		<b>numResultsToSkip:</b><br/>
 		<input type="text" name="numResultsToSkip" value="0"/>
@@ -17,5 +20,12 @@
 		<br/><br/>
 		<button type="submit">Search</button>
 	</form>
+
+	<script type="text/javascript">
+		window.onload = function () {
+			var oTextbox = new AutoSuggestControl(document.getElementById("q"), new StateSuggestions());
+		}
+	</script>
+
 </body>
 </html>
