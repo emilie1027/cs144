@@ -33,6 +33,12 @@
 <body<%
 	if (!request.getAttribute("Longitude").equals("")) { out.print(" onload=\"initialize()\""); }
 	%>>
+	<form id="form1" method="get" action="/eBay/item">
+		<b>Item ID:</b><br/>
+		<input type="text" name="id"/>
+		<br/><br/>
+		<button type="submit">Query</button>
+	</form><br/>
 	<h1>eBay Data Item Detail</h1>
 	<p>ItemID: <%= request.getAttribute("ItemID") %></p>
 	<p>Name: <%= request.getAttribute("Name") %></p>
