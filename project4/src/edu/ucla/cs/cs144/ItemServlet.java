@@ -32,7 +32,7 @@ public class ItemServlet extends HttpServlet implements Servlet {
     	
     	if (result.isEmpty()) {
     		PrintWriter out = response.getWriter();
-    		out.println("Item Not Found");
+            out.println("<!DOCTYPE html><html><body>Item Not Found<br><a href='/eBay/keywordSearch.html'>[Back to Search]</a></body><html>");
         	out.close();
         	
     		return;
