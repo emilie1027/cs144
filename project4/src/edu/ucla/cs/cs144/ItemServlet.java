@@ -3,6 +3,12 @@ package edu.ucla.cs.cs144;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -41,8 +47,6 @@ public class ItemServlet extends HttpServlet implements Servlet {
 	    	request.setAttribute("Currently", doc.getElementsByTagName("Currently").item(0).getTextContent());
 	    	request.setAttribute("First_Bid", doc.getElementsByTagName("First_Bid").item(0).getTextContent());
 	    	request.setAttribute("Number_of_Bids", doc.getElementsByTagName("Number_of_Bids").item(0).getTextContent());
-	    	request.setAttribute("Location", doc.getElementsByTagName("Location").item(0).getTextContent());
-	    	request.setAttribute("Country", doc.getElementsByTagName("Country").item(0).getTextContent());
 	    	request.setAttribute("Started", doc.getElementsByTagName("Started").item(0).getTextContent());
 	    	request.setAttribute("Ends", doc.getElementsByTagName("Ends").item(0).getTextContent());
 	    	request.setAttribute("Description", doc.getElementsByTagName("Description").item(0).getTextContent());
@@ -52,15 +56,16 @@ public class ItemServlet extends HttpServlet implements Servlet {
 	    	request.setAttribute("SellerRating", sellerElement.getAttribute("Rating"));
 	    	
 	    	int count = doc.getElementsByTagName("Bid").getLength();
-	    	BidResult[] bidList = new BidResult[count];
+	    	//BidResult[] bidList = new BidResult[count];
+	    	List<BidResult> bidList = new ArrayList<BidResult>();
 	    	for (int i = 0; i < count; i++)
-	    		bidList[i] = new BidResult();
+	    		bidList.add(new BidResult());
 	    	
 	    	NodeList list = doc.getElementsByTagName("Bidder");
 	    	for (int i = 0; i < count; i++) {
 	    		Element element = (Element)list.item(i);
-	    		bidList[i].userID = element.getAttribute("UserID");
-	    		bidList[i].rating = element.getAttribute("Rating");
+	    		bidList.get(i).userID = element.getAttribute("UserID");
+	    		bidList.get(i).rating = element.getAttribute("Rating");
 	    	}
 	    	
 	    	list = doc.getElementsByTagName("Category");
@@ -78,27 +83,32 @@ public class ItemServlet extends HttpServlet implements Servlet {
 	    	
 	    	list = doc.getElementsByTagName("Time");
 	    	for (int i = 0; i < count; i++) {
-	    		bidList[i].time = list.item(i).getTextContent();
+	    		bidList.get(i).time = list.item(i).getTextContent();
 	    	}
 	    	
 	    	list = doc.getElementsByTagName("Amount");
 	    	for (int i = 0; i < count; i++) {
-	    		bidList[i].amount = list.item(i).getTextContent();
+	    		bidList.get(i).amount = list.item(i).getTextContent();
 	    	}
 	    	
 	    	list = doc.getElementsByTagName("Country");
 	    	for (int i = 0; i < count; i++) {
-	    		bidList[i].country = list.item(i).getTextContent();
+	    		bidList.get(i).country = list.item(i).getTextContent();
 	    	}
+	    	
+	    	request.setAttribute("Country", doc.getElementsByTagName("Country").item(count).getTextContent());
 	    	
 	    	list = doc.getElementsByTagName("Location");
 	    	for (int i = 0; i < count; i++) {
-	    		bidList[i].location = list.item(i).getTextContent();
+	    		bidList.get(i).location = list.item(i).getTextContent();
 	    	}
+	    	
+	    	Collections.sort(bidList, new BidResultComparator());
 	    	
 	    	request.setAttribute("BidList", bidList);
 	    	
 	    	if (list.getLength() > count) {
+	    		request.setAttribute("Location", doc.getElementsByTagName("Location").item(count).getTextContent());
 	    		Element element = (Element)list.item(count);
 	    		request.setAttribute("Latitude", element.getAttribute("Latitude"));
 	    		request.setAttribute("Longitude", element.getAttribute("Longitude"));
@@ -115,5 +125,18 @@ public class ItemServlet extends HttpServlet implements Servlet {
     	}
     	
     	request.getRequestDispatcher("/itemResult.jsp").forward(request, response);
+    }
+    
+    static class BidResultComparator implements Comparator<BidResult> {
+        public int compare(BidResult o1, BidResult o2) {
+        	try {
+	        	SimpleDateFormat parser = new SimpleDateFormat("MMM-dd-yy HH:mm:ss");
+	        	Date d1 = parser.parse(o1.time);
+	        	Date d2 = parser.parse(o2.time);
+	        	return d2.compareTo(d1);
+        	} catch (Exception e) {
+        		return 0;
+        	}
+       }
     }
 }

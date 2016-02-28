@@ -3,6 +3,8 @@
 <head>
 	<title>eBay Data Keyword Item Detail</title>
 	<%@ page import = "edu.ucla.cs.cs144.BidResult" %>
+	<%@ page import = "java.util.ArrayList" %>
+	<%@ page import = "java.util.List" %>
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?"></script>
 	<%
 	if (!request.getAttribute("Longitude").equals("")) {
@@ -37,7 +39,7 @@
 		<b>Item ID:</b><br/>
 		<input type="text" name="id"/>
 		<br/><br/>
-		<button type="submit">Query</button>
+		<button type="submit">Query</button> <a href="/eBay/keywordSearch.html">[Back to Search]</a>
 	</form><br/>
 	<h1>eBay Data Item Detail</h1>
 	<p>ItemID: <%= request.getAttribute("ItemID") %></p>
@@ -47,6 +49,7 @@
 	<p>First_Bid: <%= request.getAttribute("First_Bid") %></p>
 	<p>Number of Bids: <%= request.getAttribute("Number_of_Bids") %></p>
 	<p>Location: <%= request.getAttribute("Location") %></p>
+	<p>Country: <%= request.getAttribute("Country") %></p>
 	<p>Latitude: <%= request.getAttribute("Latitude") %> | Longitude: <%= request.getAttribute("Longitude") %></p>
 	<p>Category: <%= request.getAttribute("Category") %></p>
 	<p>Started: <%= request.getAttribute("Started") %></p>
@@ -54,7 +57,7 @@
 	<p>Description: <br/><%= request.getAttribute("Description") %><br/></p>
 	<p>Bids: </p>
 	<%
-		BidResult[] list = (BidResult[]) request.getAttribute("BidList");
+		List<BidResult> list = (ArrayList<BidResult>) request.getAttribute("BidList");
 
 		for(BidResult item : list) {
 			out.println("<hr>");
