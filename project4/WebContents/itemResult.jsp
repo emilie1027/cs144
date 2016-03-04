@@ -45,6 +45,7 @@
 	<p>ItemID: <%= request.getAttribute("ItemID") %></p>
 	<p>Name: <%= request.getAttribute("Name") %></p>
 	<p>Seller: <%= request.getAttribute("SellerUserID") %> (Rating: <%= request.getAttribute("SellerRating") %>)</p>
+	<% if (!request.getAttribute("Buy_Price").equals("")) { out.print("<p>Buy Price: " + request.getAttribute("Buy_Price") + "</p>"); } %>
 	<p>Currently: <%= request.getAttribute("Currently") %></p>
 	<p>First_Bid: <%= request.getAttribute("First_Bid") %></p>
 	<p>Number of Bids: <%= request.getAttribute("Number_of_Bids") %></p>

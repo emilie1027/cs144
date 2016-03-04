@@ -51,6 +51,12 @@ public class ItemServlet extends HttpServlet implements Servlet {
 	    	request.setAttribute("Ends", doc.getElementsByTagName("Ends").item(0).getTextContent());
 	    	request.setAttribute("Description", doc.getElementsByTagName("Description").item(0).getTextContent());
 	    	
+	    	try {
+	    		request.setAttribute("Buy_Price", doc.getElementsByTagName("Buy_Price").item(0).getTextContent());
+	    	} catch (Exception e) {
+	    		request.setAttribute("Buy_Price", "");
+	    	}
+	    	
 	    	Element sellerElement = (Element)doc.getElementsByTagName("Seller").item(0);
 	    	request.setAttribute("SellerUserID", sellerElement.getAttribute("UserID"));
 	    	request.setAttribute("SellerRating", sellerElement.getAttribute("Rating"));
