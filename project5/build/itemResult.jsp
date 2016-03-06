@@ -42,21 +42,24 @@
 		<button type="submit">Query</button> <a href="/eBay/keywordSearch.html">[Back to Search]</a>
 	</form><br/>
 	<h1>eBay Data Item Detail</h1>
-	<p>ItemID: <%= request.getAttribute("ItemID") %></p>
-	<p>Name: <%= request.getAttribute("Name") %></p>
-	<p>Seller: <%= request.getAttribute("SellerUserID") %> (Rating: <%= request.getAttribute("SellerRating") %>)</p>
-<% if (!request.getAttribute("Buy_Price").equals("")) { out.print("<p>Buy Price: " + request.getAttribute("Buy_Price") + "</p>"); } %>
-	<p>Currently: <%= request.getAttribute("Currently") %></p>
-	<p>First_Bid: <%= request.getAttribute("First_Bid") %></p>
-	<p>Number of Bids: <%= request.getAttribute("Number_of_Bids") %></p>
-	<p>Location: <%= request.getAttribute("Location") %></p>
-	<p>Country: <%= request.getAttribute("Country") %></p>
-	<p>Latitude: <%= request.getAttribute("Latitude") %> | Longitude: <%= request.getAttribute("Longitude") %></p>
-	<p>Category: <%= request.getAttribute("Category") %></p>
-	<p>Started: <%= request.getAttribute("Started") %></p>
-	<p>Ends: <%= request.getAttribute("Ends") %></p>
-	<p>Description: <br/><%= request.getAttribute("Description") %><br/></p>
-	<p>Bids: </p>
+    <form id='form2' method='get' action='/eBay/pay'>
+        <p>ItemID: <%= request.getAttribute("ItemID") %></p>
+        <p>Name: <%= request.getAttribute("Name") %></p>
+        <p>Seller: <%= request.getAttribute("SellerUserID") %> (Rating: <%= request.getAttribute("SellerRating") %>)</p>
+        <% if (!request.getAttribute("Buy_Price").equals("")) { out.print("<p>Buy_Price: "+ request.getAttribute("Buy_Price") + "</p>");} %>
+        <button type='submit'>Pay Now</button>
+    </form>
+    <p>Currently: <%= request.getAttribute("Currently") %></p>
+    <p>First_Bid: <%= request.getAttribute("First_Bid") %></p>
+    <p>Number of Bids: <%= request.getAttribute("Number_of_Bids") %></p>
+    <p>Location: <%= request.getAttribute("Location") %></p>
+    <p>Country: <%= request.getAttribute("Country") %></p>
+    <p>Latitude: <%= request.getAttribute("Latitude") %> | Longitude: <%= request.getAttribute("Longitude") %></p>
+    <p>Category: <%= request.getAttribute("Category") %></p>
+    <p>Started: <%= request.getAttribute("Started") %></p>
+    <p>Ends: <%= request.getAttribute("Ends") %></p>
+    <p>Description: <br/><%= request.getAttribute("Description") %><br/></p>
+    <p>Bids: </p>
 	<%
 		List<BidResult> list = (ArrayList<BidResult>) request.getAttribute("BidList");
 
