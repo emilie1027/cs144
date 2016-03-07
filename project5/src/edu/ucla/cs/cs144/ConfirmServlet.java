@@ -31,6 +31,7 @@ public class ConfirmServlet extends HttpServlet implements Servlet {
         // your codes here
         HttpSession session = request.getSession();
         session.setAttribute("Credit_Card", request.getParameter("Credit_Card"));
+        session.setAttribute("Transaction_Time", new Date(session.getLastAccessedTime()));
         request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
     }
 }

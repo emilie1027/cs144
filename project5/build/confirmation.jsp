@@ -13,6 +13,6 @@
 <p>Name: <%= request.getSession().getAttribute("Name")%></p>
 <p>Buy_Price: <%= request.getSession().getAttribute("Buy_Price")%></p>
 <p>Credit Card: <%= request.getSession().getAttribute("Credit_Card")%></p>
-<p>Time: <%= new java.util.Date()%></p>
+<p>Time: <%= request.getSession().getAttribute("Transaction_Time")%></p>
 </body>
 </html>
