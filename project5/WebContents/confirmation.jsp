@@ -14,5 +14,6 @@
 <p>Buy_Price: <%= request.getSession().getAttribute("Buy_Price")%></p>
 <p>Credit Card: <%= request.getSession().getAttribute("Credit_Card")%></p>
 <p>Time: <%= request.getSession().getAttribute("Transaction_Time")%></p>
+<% request.getSession().removeAttribute("Credit_Card");%>
 </body>
 </html>
