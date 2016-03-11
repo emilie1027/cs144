@@ -46,8 +46,7 @@
         <p>ItemID: <%= request.getAttribute("ItemID") %></p>
         <p>Name: <%= request.getAttribute("Name") %></p>
         <p>Seller: <%= request.getAttribute("SellerUserID") %> (Rating: <%= request.getAttribute("SellerRating") %>)</p>
-        <% if (!request.getAttribute("Buy_Price").equals("")) { out.print("<p>Buy_Price: "+ request.getAttribute("Buy_Price") + "</p>");} %>
-        <button type='submit'>Pay Now</button>
+<% if (!request.getAttribute("Buy_Price").equals("")) { out.print("<p>Buy_Price: "+ request.getAttribute("Buy_Price") + "</p><button type='submit'>Pay Now</button>");} %>
     </form>
     <p>Currently: <%= request.getAttribute("Currently") %></p>
     <p>First_Bid: <%= request.getAttribute("First_Bid") %></p>
