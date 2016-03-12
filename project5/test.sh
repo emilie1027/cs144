@@ -1,4 +1,3 @@
-#!bin/sh
 rm -r $CATALINA_BASE/webapps/eBay
 rm $CATALINA_BASE/webapps/eBay.war
 rm -r build

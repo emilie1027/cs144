@@ -8,7 +8,7 @@
 
 <body>
 <h1>Transaction: Input Credit Card Information</h1>
-<form id="form" method="get" action="https://<%=request.getServerName()+ ":8443" + request.getContextPath()%>/confirm">
+<form id="form" method="post" action="https://<%=request.getServerName()+ ":8443" + request.getContextPath()%>/confirm">
 <p>ItemID: <%= request.getSession().getAttribute("ItemID")%></p>
 <p>Name: <%= request.getSession().getAttribute("Name")%></p>
 <p>Buy_Price: <%= request.getSession().getAttribute("Buy_Price")%></p></br><br/>

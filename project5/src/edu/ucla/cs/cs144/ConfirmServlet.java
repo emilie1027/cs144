@@ -26,12 +26,17 @@ public class ConfirmServlet extends HttpServlet implements Servlet {
        
     public ConfirmServlet() {}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         // your codes here
         HttpSession session = request.getSession();
         session.setAttribute("Credit_Card", request.getParameter("Credit_Card"));
         session.setAttribute("Transaction_Time", new Date(session.getLastAccessedTime()));
         request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        doGet(request, response);
     }
 }
